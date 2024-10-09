@@ -1,29 +1,40 @@
 'use client'
 
 import { Button } from '@nextui-org/react';
-import { SunDim } from '@phosphor-icons/react';
+import { Moon, SunDim } from '@phosphor-icons/react';
+import { useTheme } from 'next-themes';
+import { useState, useEffect } from 'react';
+import { Skeleton } from "@nextui-org/skeleton";
 
 export function ThemeSwitcher() {
-  function handleSwitchTheme() {
-    const htmlElement = document.getElementById('html');
-    const isDarkMode = htmlElement?.classList.contains('dark');
+  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
 
-    if (isDarkMode) {
-      htmlElement?.classList.replace('dark', 'light');
+  useEffect(() => {
+    setMounted(true)
+  }, []);
+
+  function handleSwitchTheme() {
+    if (theme === 'dark') {
+      setTheme('light');
       return;
     }
 
-    htmlElement?.classList.replace('light', 'dark');
+    setTheme('dark')
   }
+
+  if (!mounted) return (
+    <Skeleton className="flex rounded-medium w-20 h-10 md:w-[126.02px]" />
+  );
 
   return (
     <Button
       className='font-medium'
       onClick={handleSwitchTheme}
     >
-      flash bang
+      <p className='hidden md:flex'>{theme === 'dark' ? 'flash bang' : 'dark mode'}</p>
 
-      <SunDim size={20} />
+      {theme === 'dark' ? <SunDim size={20} /> : <Moon size={20} />}
     </Button>
   )
 }
