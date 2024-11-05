@@ -14,7 +14,13 @@ export function ThemeSwitcher() {
     setMounted(true)
   }, []);
 
-  function handleSwitchTheme() {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  function handleSwitchTheme(e: KeyboardEvent<HTMLButtonElement> | KeyboardEvent) {
+    if (e.type === 'keydown' && 'key' in e && e.key !== 'Enter') {
+      return;
+    }
+
     if (theme === 'dark') {
       setTheme('light');
       return;
@@ -30,7 +36,8 @@ export function ThemeSwitcher() {
   return (
     <Button
       className='font-medium'
-      onClick={handleSwitchTheme}
+      onClick={(e) => handleSwitchTheme(e)}
+      onKeyDown={handleSwitchTheme}
     >
       <p className='hidden md:flex'>{theme === 'dark' ? 'flash bang' : 'dark mode'}</p>
 
