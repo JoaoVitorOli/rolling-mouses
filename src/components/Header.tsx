@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export function Header() {
   return (
-    <header className="">
+    <header className="fixed z-50 top-0 w-full bg-background/70 backdrop-blur-md">
       <div className="container px-4 py-5 mx-auto justify-between flex items-center">
         <div className="flex items-center gap-2">
           <Tooltip content="sniff sniff">
